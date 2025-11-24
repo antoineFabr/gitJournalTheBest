@@ -1,12 +1,24 @@
 <script setup>
-defineProps({
+// On capture les props pour pouvoir les lire dans la fonction
+const props = defineProps({
   commit: Object,
 });
 const emit = defineEmits(["update"]);
 
-// Quand on modifie, on remonte l'info au parent
 const onUpdate = () => {
   emit("update");
+};
+
+// Fonction pour basculer le statut
+const toggleStatus = () => {
+  // Si c'est DONE, ça devient WIP, sinon ça devient DONE (gère aussi FIX -> DONE)
+  if (props.commit.status === "DONE") {
+    props.commit.status = "WIP";
+  } else {
+    props.commit.status = "DONE";
+  }
+  // On signale la modification pour sauvegarder
+  onUpdate();
 };
 </script>
 
@@ -28,7 +40,12 @@ const onUpdate = () => {
 
     <div class="content-col">
       <div class="msg-container">
-        <span v-if="commit.status" :class="['status-badge', commit.status]">
+        <span
+          v-if="commit.status"
+          :class="['status-badge', commit.status]"
+          @click="toggleStatus"
+          title="Cliquer pour changer le statut"
+        >
           {{ commit.status }}
         </span>
         <input
@@ -79,7 +96,14 @@ const onUpdate = () => {
   color: white;
   text-transform: uppercase;
   white-space: nowrap;
+  /* Curseur pour indiquer que c'est cliquable */
+  cursor: pointer;
+  user-select: none;
 }
+.status-badge:hover {
+  opacity: 0.8;
+}
+
 .status-badge.DONE {
   background-color: #27ae60;
 }

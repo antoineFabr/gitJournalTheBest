@@ -4,9 +4,10 @@ defineProps({
   loading: Boolean,
   saveStatus: String,
   hasData: Boolean,
+  currentTheme: String,
 });
 
-defineEmits(["generate", "export"]);
+defineEmits(["generate", "export", "update-theme"]);
 </script>
 
 <template>

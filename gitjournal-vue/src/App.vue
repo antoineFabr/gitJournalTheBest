@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { fr } from "date-fns/locale"; // Attention à l'import format ici
+import { format } from "date-fns"; // Attention à l'import format ici
 import { differenceInMinutes, parseISO } from "date-fns";
-import { format, fr } from "date-fns/locale"; // Attention à l'import format ici
 import html2pdf from "html2pdf.js";
 
 // Imports des composants et utils
@@ -124,7 +125,9 @@ const fetchCommits = async () => {
       if (saved && saved.duration !== undefined) finalDuration = saved.duration;
 
       const finalMessage = saved?.message || titleOnly;
-      const finalStatus = saved?.status || status || "";
+
+      // --- MODIFICATION : "DONE" par défaut ---
+      const finalStatus = saved?.status || status || "DONE";
 
       return {
         id: sha,
