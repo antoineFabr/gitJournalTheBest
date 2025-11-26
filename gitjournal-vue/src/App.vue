@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { differenceInMinutes, parseISO } from "date-fns";
-import { format, fr } from "date-fns/locale"; // Attention à l'import format ici
+import { format } from "date-fns";
+import { fr } from "date-fns/locale"; // Attention à l'import format ici
 import html2pdf from "html2pdf.js";
 
 // Imports des composants et utils
